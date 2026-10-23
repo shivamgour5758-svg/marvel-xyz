@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#e62429">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icons/icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icons/icon.svg">
+<meta name="description" content="Marvel Universe X — a personal Marvel movie and wallpaper library.">
+<title>Marvel Universe X</title>
+<style>
+:root{--red:#e62429;--bg:#08090d;--panel:rgba(17,18,25,.88);--text:#f7f7fa;--muted:#aaaab6}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:85px}
+body{font-family:Arial,Helvetica,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden}
+body:before{content:"";position:fixed;inset:0;z-index:-2;background:linear-gradient(90deg,rgba(5,6,10,.94),rgba(5,6,10,.68) 52%,rgba(5,6,10,.42)),linear-gradient(0deg,#08090d 0%,transparent 60%),url("images/doctor-doom.jpg") center 22%/cover no-repeat}
+body:after{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;background:rgba(4,5,9,.12)}
+button,input,select{font:inherit}button,a,label{ -webkit-tap-highlight-color:transparent}button{cursor:pointer}a{color:inherit;text-decoration:none}
+header{position:sticky;top:0;z-index:30;background:rgba(7,8,12,.88);backdrop-filter:blur(18px);border-bottom:1px solid #ffffff17}
+.nav{max-width:1250px;margin:auto;padding:15px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+.logo{font-size:20px;font-weight:900;letter-spacing:1px;white-space:nowrap}.logo span{color:var(--red)}
+nav{display:flex;align-items:center;gap:22px}nav a{font-size:12px;color:#ddd;transition:.2s}nav a:hover{color:#fff}
+.nav-right{display:flex;align-items:center;gap:10px}.lang-btn,.menu-btn{background:#1a1b23;color:white;border:1px solid #42434d;border-radius:6px;padding:10px 12px;font-size:12px;font-weight:bold}.menu-btn{display:none}
+.wrap{max-width:1250px;margin:auto;padding:0 24px}
+.hero{min-height:500px;display:flex;align-items:center;padding-top:55px;padding-bottom:55px}.hero-content{max-width:710px}
+.eyebrow{display:inline-flex;align-items:center;gap:9px;border:1px solid #ffffff30;border-radius:30px;padding:8px 13px;background:#0006;font-size:10px;letter-spacing:2px;color:#eee}
+.dot{width:7px;height:7px;background:var(--red);border-radius:50%;box-shadow:0 0 12px var(--red)}
+h1{font-size:clamp(43px,7vw,82px);line-height:.98;font-weight:950;letter-spacing:-3px;margin:25px 0 20px;text-shadow:0 5px 35px #000}
+h1 span{display:block;color:var(--red)}.hero p{color:#d1d1d8;max-width:570px;line-height:1.8;font-size:15px}
+.actions{display:flex;gap:11px;flex-wrap:wrap;margin-top:25px}
+.btn,.upload-label{display:inline-flex;justify-content:center;align-items:center;gap:8px;padding:12px 16px;border:1px solid #ffffff2d;border-radius:7px;background:#ffffff0d;color:#fff;font-weight:700;font-size:12px;transition:.2s;cursor:pointer}
+.btn:hover,.upload-label:hover{transform:translateY(-2px);background:#ffffff1a}.btn.primary{background:var(--red);border-color:var(--red)}.btn.primary:hover{background:#c91c22}
+.stats{display:flex;gap:28px;margin-top:30px;flex-wrap:wrap}.stat strong{display:block;font-size:20px}.stat small{display:block;color:var(--muted);margin-top:5px;font-size:10px;letter-spacing:1px}
+.section{padding:38px 0 48px;scroll-margin-top:85px}.section-head{display:flex;align-items:end;justify-content:space-between;gap:16px;margin-bottom:21px;flex-wrap:wrap}
+.kicker{color:var(--red);font-size:10px;font-weight:800;letter-spacing:2px}h2{font-size:clamp(25px,4vw,34px);margin-top:8px;letter-spacing:-.7px}
+.subtitle{color:var(--muted);font-size:13px;line-height:1.7;margin-top:8px}
+.panel{background:var(--panel);border:1px solid #ffffff19;border-radius:14px;padding:19px;backdrop-filter:blur(14px)}
+.tools{display:flex;gap:9px;flex-wrap:wrap;margin-bottom:18px}.search{flex:1;min-width:180px;background:#0006;color:white;border:1px solid #393a45;border-radius:7px;padding:12px 13px}
+select{background:#17171f;color:#fff;border:1px solid #383842;border-radius:7px;padding:12px;max-width:100%}input[type=file]{display:none}
+.upload-label{background:#211316;border-color:#713038}.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
+.card{overflow:hidden;background:rgba(13,14,20,.95);border:1px solid #ffffff17;border-radius:10px;transition:transform .23s,border-color .23s;min-width:0}
+.card:hover{transform:translateY(-4px);border-color:#e6242988}
+.poster{height:220px;position:relative;overflow:hidden;background:linear-gradient(135deg,#272832,#111116)}
+.poster img{width:100%;height:100%;object-fit:cover;display:block}
+.poster:after{content:"";position:absolute;inset:30% 0 0;background:linear-gradient(transparent,#090a0fee);pointer-events:none}
+.poster-tag{position:absolute;z-index:1;left:9px;top:9px;background:#000b;padding:6px 8px;border-radius:4px;font-size:9px;letter-spacing:1px}
+.poster-title{position:absolute;z-index:2;left:12px;right:10px;bottom:12px;font-size:17px;font-weight:900;text-shadow:0 2px 12px #000;overflow-wrap:anywhere}
+.card-body{padding:12px}.card h3{font-size:13px;line-height:1.5;overflow-wrap:anywhere}.card p{font-size:11px;color:var(--muted);margin-top:5px;line-height:1.5}
+.card-actions{display:flex;gap:6px;margin-top:11px;flex-wrap:wrap}.small-btn{border:1px solid #3a3b46;background:#202027;color:white;padding:8px 9px;border-radius:5px;font-size:10px}.small-btn:hover{border-color:var(--red)}.small-btn.red{background:#99171e;border-color:#b82028}.small-btn.active{color:#ff656b;border-color:#ff656b}
+.empty{text-align:center;padding:34px 13px;color:var(--muted);border:1px dashed #3a3a45;border-radius:10px;line-height:1.9;font-size:13px}
+.wall-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.wall-grid .poster{height:190px}.wall-grid .poster img{cursor:zoom-in}
+.note{font-size:11px;line-height:1.8;color:#a5a5b0;margin-top:13px}.chips{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
+.chip{border:1px solid #373740;background:#0005;color:#ccc;border-radius:25px;padding:8px 12px;font-size:10px}.chip.active,.chip:hover{background:var(--red);border-color:var(--red);color:#fff}
+.info-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}.info-card{padding:21px;border-radius:10px;background:#0f1016d9;border:1px solid #292a33}.info-card .symbol{font-size:24px;margin-bottom:12px}.info-card h3{font-size:14px;margin-bottom:8px}.info-card p{font-size:12px;color:var(--muted);line-height:1.8}
+footer{margin-top:24px;border-top:1px solid #25252d;padding:26px 20px;text-align:center;color:#92929c;font-size:11px;line-height:2}footer strong{color:#eee}
+.modal{display:none;position:fixed;inset:0;z-index:100;background:#000e;padding:20px;align-items:center;justify-content:center}.modal.open{display:flex}
+.modal-inner{max-width:1000px;width:100%;max-height:94vh;overflow:auto;background:#101116;border:1px solid #33333d;border-radius:12px;padding:14px}
+.modal-top{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:12px}.modal-top h3{font-size:14px;overflow-wrap:anywhere}
+.close{background:#282831;border:1px solid #444;color:white;width:35px;height:35px;border-radius:6px;font-size:20px}
+#previewImage{display:block;max-width:100%;max-height:72vh;margin:auto;object-fit:contain}
+#videoPlayer{display:none;width:100%;max-height:68vh;background:#000}
+.video-poster{position:relative;background:#050506;min-height:180px;margin-bottom:10px;overflow:hidden;border-radius:8px}
+.video-poster img{display:block;width:100%;max-height:300px;object-fit:cover;opacity:.7}
+.video-poster div{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;text-align:center;font-weight:900;font-size:clamp(22px,5vw,38px);text-shadow:0 3px 20px #000;padding:20px}
+.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#f5f5f5;color:#111;padding:12px 17px;border-radius:7px;font-size:12px;z-index:200;display:none;max-width:90%;text-align:center}.toast.show{display:block}
+@media(max-width:900px){.grid{grid-template-columns:repeat(3,minmax(0,1fr))}.wall-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:650px){
+ .nav{padding:13px 15px}.logo{font-size:16px;letter-spacing:.3px}.menu-btn{display:block}
+ nav{display:none;position:absolute;top:100%;left:0;right:0;background:#0b0c11;padding:17px;flex-direction:column;align-items:flex-start;border-bottom:1px solid #333}
+ nav.open{display:flex}.nav-right{margin-left:auto}.wrap{padding:0 15px}.hero{min-height:435px;padding-top:45px}h1{letter-spacing:-1.5px}.hero p{font-size:13px}
+ .stats{gap:19px}.section{padding:28px 0 35px}.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.poster{height:175px}.wall-grid .poster{height:130px}
+ .panel{padding:12px}.tools>*{width:100%}.search{min-width:0}.info-grid{grid-template-columns:1fr}.card-body{padding:9px}.card-actions .small-btn{padding:7px;font-size:9px}
+}
+@media(max-width:370px){.grid,.wall-grid{grid-template-columns:1fr}.poster,.wall-grid .poster{height:220px}.lang-btn{padding:9px 8px}}
+</style>
+</head>
+<body>
+<header>
+ <div class="nav">
+  <a class="logo" href="#home">MARVEL <span>UNIVERSE X</span></a>
+  <nav id="navLinks">
+   <a href="#home" data-i18n="home">HOME</a><a href="#movies" data-i18n="moviesNav">MOVIE VAULT</a><a href="#wallpapers" data-i18n="wallNav">WALLPAPERS</a><a href="#universe" data-i18n="universe">UNIVERSE</a>
+  </nav>
+  <div class="nav-right"><button class="lang-btn" id="langBtn">हिंदी</button><button class="menu-btn" id="menuBtn" aria-label="Menu">☰</button></div>
+ </div>
+</header>
+<main>
+<section class="hero wrap" id="home">
+ <div class="hero-content">
+  <div class="eyebrow"><span class="dot"></span><span data-i18n="eyebrow">YOUR PERSONAL MARVEL COLLECTION</span></div>
+  <h1 data-i18n="heroTitle">ENTER THE <span>MULTIVERSE.</span></h1>
+  <p data-i18n="heroDesc">One universe. Endless legends. Build your own Marvel vault with your favourite movies, cinematic wallpapers and unforgettable heroes. Your collection, your universe.</p>
+  <div class="actions"><a class="btn primary" href="#movies" data-i18n="exploreMovies">▶ &nbsp; EXPLORE MOVIES</a><a class="btn" href="#wallpapers" data-i18n="exploreWall">✦ &nbsp; WALLPAPER GALLERY</a></div>
+  <div class="stats"><div class="stat"><strong id="movieCount">0</strong><small data-i18n="yourMovies">YOUR MOVIES</small></div><div class="stat"><strong id="wallCount">0</strong><small data-i18n="wallCountLabel">WALLPAPERS</small></div><div class="stat"><strong id="favCount">0</strong><small data-i18n="favorites">FAVOURITES</small></div></div>
+ </div>
+</section>
+<section class="section wrap" id="movies">
+ <div class="section-head"><div><div class="kicker" data-i18n="privateLibrary">YOUR PRIVATE LIBRARY</div><h2 data-i18n="movieVault">Movie Vault</h2><p class="subtitle" data-i18n="movieSub">Select movie files from your device and play them here.</p></div><label class="upload-label" for="movieInput" data-i18n="addMovies">＋ ADD MOVIES</label><input id="movieInput" type="file" accept="video/*,.mp4,.webm,.ogg,.mov,.m4v" multiple></div>
+ <div class="panel"><div class="tools"><input class="search" id="movieSearch" type="search" placeholder="Search movies..." data-i18n-placeholder="searchMovies"><select id="movieSort" aria-label="Sort movies"><option value="name" data-i18n="sortName">Sort: Name</option><option value="newest" data-i18n="sortNewest">Sort: Recently Added</option></select><label class="upload-label" for="movieFolder" data-i18n="addMovieFolder">＋ ADD MOVIE FOLDER</label><input id="movieFolder" type="file" accept="video/*,.mp4,.webm,.ogg,.mov,.m4v" webkitdirectory multiple></div><div class="grid" id="movieGrid"></div><div class="empty" id="movieEmpty" data-i18n="movieEmpty">Your movie vault is ready.<br>Select your movie files to get started.</div><p class="note" data-i18n="movieNote">Movie files stay on your device and are not uploaded. Refreshing the page means you may need to select them again. MP4 is recommended.</p></div>
+</section>
+<section class="section wrap" id="wallpapers">
+ <div class="section-head"><div><div class="kicker" data-i18n="artCollection">CINEMATIC ART COLLECTION</div><h2 data-i18n="wallTitle">Wallpaper Gallery</h2><p class="subtitle" data-i18n="wallSub">Keep your desktop and mobile Marvel wallpapers together.</p></div><label class="upload-label" for="wallInput" data-i18n="addWallpapers">＋ ADD WALLPAPERS</label><input id="wallInput" type="file" accept="image/*" multiple></div>
+ <div class="panel"><div class="tools"><input class="search" id="wallSearch" type="search" placeholder="Search wallpapers..." data-i18n-placeholder="searchWall"><label class="upload-label" for="wallFolder" data-i18n="addImageFolder">＋ ADD IMAGE FOLDER</label><input id="wallFolder" type="file" accept="image/*" webkitdirectory multiple></div>
+ <div class="chips" id="wallFilters"><button class="chip active" data-filter="All" data-i18n="all">ALL</button><button class="chip" data-filter="Desktop" data-i18n="desktop">DESKTOP</button><button class="chip" data-filter="Mobile" data-i18n="mobile">MOBILE</button><button class="chip" data-filter="Square" data-i18n="square">SQUARE</button><button class="chip" data-filter="Favorites" data-i18n="favoritesFilter">♥ FAVORITES</button></div>
+ <div class="grid wall-grid" id="wallGrid"></div><div class="empty" id="wallEmpty" data-i18n="wallEmpty">Your gallery is waiting for wallpapers. Select your image folder to begin.</div><p class="note" data-i18n="wallNote">Imported wallpapers are available in this session. For a permanent website gallery, put images in the wallpapers folder and add their paths in the code.</p></div>
+</section>
+<section class="section wrap" id="universe"><div class="section-head"><div><div class="kicker" data-i18n="marvelWorld">THE MARVEL WORLD</div><h2 data-i18n="exploreUniverse">Explore the Universe</h2><p class="subtitle" data-i18n="universeSub">Discover characters and official Marvel resources.</p></div></div>
+ <div class="info-grid"><a class="info-card" href="https://www.marvel.com/characters" target="_blank" rel="noopener"><div class="symbol">✦</div><h3 data-i18n="characters">Marvel Characters</h3><p data-i18n="charactersDesc">Explore heroes, villains and character histories on Marvel's official website.</p></a><a class="info-card" href="https://www.marvel.com/movies" target="_blank" rel="noopener"><div class="symbol">🎬</div><h3 data-i18n="marvelMovies">Marvel Movies</h3><p data-i18n="marvelMoviesDesc">Explore official Marvel movie information and pages.</p></a><a class="info-card" href="https://www.youtube.com/results?search_query=Marvel+Studios+official+trailers" target="_blank" rel="noopener"><div class="symbol">▶</div><h3 data-i18n="trailers">Official Trailers</h3><p data-i18n="trailersDesc">Find official Marvel Studios trailers on YouTube.</p></a></div>
+</section>
+</main>
+<footer><strong>MARVEL UNIVERSE X</strong><br><span data-i18n="footerText">Made for Marvel fans. Built for your own collection.</span><br><span data-i18n="disclaimer">Personal fan project · Not affiliated with Marvel Entertainment.</span></footer>
+<div class="modal" id="modal" role="dialog" aria-modal="true" aria-label="Media preview"><div class="modal-inner"><div class="modal-top"><h3 id="modalTitle">Preview</h3><button class="close" id="closeModal" aria-label="Close">×</button></div><div class="video-poster" id="videoPoster" style="display:none"><img id="videoPosterImage" alt=""><div id="videoPosterText"></div></div><img id="previewImage" alt="Wallpaper preview"><video id="videoPlayer" controls playsinline></video></div></div>
+<div class="toast" id="toast" role="status"></div>
+<script>
+"use strict";
+const $=id=>document.getElementById(id);
+const movies=[],wallpapers=[],favorites=new Set(JSON.parse(localStorage.getItem("muxFavorites")||"[]"));
+let activeFilter="All",movieId=0,wallId=0,toastTimer,language=localStorage.getItem("muxLanguage")||"en",currentMovie=null;
+const translations={
+ en:{home:"HOME",moviesNav:"MOVIE VAULT",wallNav:"WALLPAPERS",universe:"UNIVERSE",eyebrow:"YOUR PERSONAL MARVEL COLLECTION",heroTitle:'ENTER THE <span>MULTIVERSE.</span>',heroDesc:"One universe. Endless legends. Build your own Marvel vault with your favourite movies, cinematic wallpapers and unforgettable heroes. Your collection, your universe.",exploreMovies:"▶ &nbsp; EXPLORE MOVIES",exploreWall:"✦ &nbsp; WALLPAPER GALLERY",yourMovies:"YOUR MOVIES",wallCountLabel:"WALLPAPERS",favorites:"FAVOURITES",privateLibrary:"YOUR PRIVATE LIBRARY",movieVault:"Movie Vault",movieSub:"Select movie files from your device and play them here.",addMovies:"＋ ADD MOVIES",searchMovies:"Search movies...",sortName:"Sort: Name",sortNewest:"Sort: Recently Added",addMovieFolder:"＋ ADD MOVIE FOLDER",movieEmpty:"Your movie vault is ready.<br>Select your movie files to get started.",movieNote:"Movie files stay on your device and are not uploaded. Refreshing the page means you may need to select them again. MP4 is recommended.",artCollection:"CINEMATIC ART COLLECTION",wallTitle:"Wallpaper Gallery",wallSub:"Keep your desktop and mobile Marvel wallpapers together.",addWallpapers:"＋ ADD WALLPAPERS",searchWall:"Search wallpapers...",addImageFolder:"＋ ADD IMAGE FOLDER",all:"ALL",desktop:"DESKTOP",mobile:"MOBILE",square:"SQUARE",favoritesFilter:"♥ FAVORITES",wallEmpty:"Your gallery is waiting for wallpapers. Select your image folder to begin.",wallNote:"Imported wallpapers are available in this session. For a permanent website gallery, put images in the wallpapers folder and add their paths in the code.",marvelWorld:"THE MARVEL WORLD",exploreUniverse:"Explore the Universe",universeSub:"Discover characters and official Marvel resources.",characters:"Marvel Characters",charactersDesc:"Explore heroes, villains and character histories on Marvel's official website.",marvelMovies:"Marvel Movies",marvelMoviesDesc:"Explore official Marvel movie information and pages.",trailers:"Official Trailers",trailersDesc:"Find official Marvel Studios trailers on YouTube.",footerText:"Made for Marvel fans. Built for your own collection.",disclaimer:"Personal fan project · Not affiliated with Marvel Entertainment.",play:"▶ PLAY",remove:"REMOVE",save:"♡ SAVE",saved:"♥ SAVED",preview:"PREVIEW",download:"↓ DOWNLOAD",localPoster:"LOCAL POSTER",movieFallback:"No poster found — add a matching image in the posters folder.",addedMovies:"movie file(s) added.",addedWalls:"wallpaper(s) added.",noVideos:"No supported video files found.",noImages:"No image files found.",removedMovie:"Movie removed from this session.",removedWall:"Wallpaper removed from this session.",playHint:"If the video does not start, press Play in the player.",favoriteOnly:"Favourites",posterTip:"Poster matched by movie filename.",english:"ENGLISH",hindi:"हिंदी"},
+ hi:{home:"होम",moviesNav:"मूवी लाइब्रेरी",wallNav:"वॉलपेपर",universe:"मार्वल यूनिवर्स",eyebrow:"आपकी अपनी मार्वल कलेक्शन",heroTitle:'मल्टीवर्स में <span>आपका स्वागत है।</span>',heroDesc:"एक यूनिवर्स, अनगिनत कहानियाँ। अपनी पसंद की मूवीज़, सिनेमैटिक वॉलपेपर और यादगार हीरोज़ की अपनी मार्वल लाइब्रेरी बनाइए।",exploreMovies:"▶ &nbsp; मूवीज़ देखें",exploreWall:"✦ &nbsp; वॉलपेपर गैलरी",yourMovies:"आपकी मूवीज़",wallCountLabel:"वॉलपेपर",favorites:"पसंदीदा",privateLibrary:"आपकी निजी लाइब्रेरी",movieVault:"मूवी लाइब्रेरी",movieSub:"अपने डिवाइस से मूवी फ़ाइल चुनें और यहीं चलाएँ।",addMovies:"＋ मूवी जोड़ें",searchMovies:"मूवी खोजें...",sortName:"क्रम: नाम",sortNewest:"क्रम: नई पहले",addMovieFolder:"＋ मूवी फ़ोल्डर जोड़ें",movieEmpty:"आपकी मूवी लाइब्रेरी तैयार है।<br>शुरू करने के लिए अपनी मूवी फ़ाइलें चुनें।",movieNote:"मूवी फ़ाइलें आपके डिवाइस पर ही रहती हैं, वेबसाइट पर अपलोड नहीं होतीं। पेज रीफ़्रेश करने पर फ़ाइलें दोबारा चुननी पड़ सकती हैं। MP4 बेहतर है।",artCollection:"सिनेमैटिक आर्ट कलेक्शन",wallTitle:"वॉलपेपर गैलरी",wallSub:"अपने PC और मोबाइल के मार्वल वॉलपेपर एक जगह रखें।",addWallpapers:"＋ वॉलपेपर जोड़ें",searchWall:"वॉलपेपर खोजें...",addImageFolder:"＋ इमेज फ़ोल्डर जोड़ें",all:"सभी",desktop:"डेस्कटॉप",mobile:"मोबाइल",square:"स्क्वायर",favoritesFilter:"♥ पसंदीदा",wallEmpty:"आपकी गैलरी वॉलपेपर का इंतज़ार कर रही है। शुरू करने के लिए इमेज फ़ोल्डर चुनें।",wallNote:"चुने गए वॉलपेपर इसी सेशन में उपलब्ध हैं। वेबसाइट पर स्थायी गैलरी के लिए इमेज को wallpapers फ़ोल्डर में रखकर कोड में उनके पाथ जोड़ें।",marvelWorld:"मार्वल की दुनिया",exploreUniverse:"यूनिवर्स देखें",universeSub:"कैरेक्टर और मार्वल के आधिकारिक संसाधन देखें।",characters:"मार्वल कैरेक्टर",charactersDesc:"मार्वल की आधिकारिक वेबसाइट पर हीरो, विलेन और उनकी कहानियाँ देखें।",marvelMovies:"मार्वल मूवीज़",marvelMoviesDesc:"मार्वल की आधिकारिक मूवी जानकारी और पेज देखें।",trailers:"ऑफिशियल ट्रेलर",trailersDesc:"YouTube पर Marvel Studios के आधिकारिक ट्रेलर खोजें।",footerText:"मार्वल फैन्स के लिए, आपकी अपनी कलेक्शन वेबसाइट।",disclaimer:"निजी फैन प्रोजेक्ट · Marvel Entertainment से संबद्ध नहीं।",play:"▶ चलाएँ",remove:"हटाएँ",save:"♡ पसंद",saved:"♥ सेव",preview:"प्रीव्यू",download:"↓ डाउनलोड",localPoster:"पोस्टर",movieFallback:"पोस्टर नहीं मिला — posters फ़ोल्डर में मूवी के नाम वाली इमेज रखें।",addedMovies:"मूवी फ़ाइलें जोड़ी गईं।",addedWalls:"वॉलपेपर जोड़े गए।",noVideos:"कोई सपोर्टेड वीडियो फ़ाइल नहीं मिली।",noImages:"कोई इमेज फ़ाइल नहीं मिली।",removedMovie:"मूवी इस सेशन से हटा दी गई।",removedWall:"वॉलपेपर इस सेशन से हटा दिया गया।",playHint:"वीडियो न चले तो प्लेयर में Play दबाएँ।",favoriteOnly:"पसंदीदा",posterTip:"पोस्टर मूवी के फ़ाइल नाम से मिलाया गया है।",english:"ENGLISH",hindi:"हिंदी"}
+};
+function t(key){return (translations[language]&&translations[language][key])||translations.en[key]||key}
+function applyLanguage(){
+ document.documentElement.lang=language==="hi"?"hi":"en";
+ document.querySelectorAll("[data-i18n]").forEach(el=>{const key=el.dataset.i18n;if(translations[language][key])el.innerHTML=translations[language][key]});
+ document.querySelectorAll("[data-i18n-placeholder]").forEach(el=>{const key=el.dataset.i18nPlaceholder;if(translations[language][key])el.placeholder=translations[language][key]});
+ $("langBtn").textContent=language==="en"?"हिंदी":"ENGLISH";
+ renderMovies();renderWallpapers();
+}
+$("langBtn").addEventListener("click",()=>{language=language==="en"?"hi":"en";localStorage.setItem("muxLanguage",language);applyLanguage()});
+function toast(message){const b=$("toast");b.textContent=message;b.classList.add("show");clearTimeout(toastTimer);toastTimer=setTimeout(()=>b.classList.remove("show"),2600)}
+function esc(s){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
+function updateStats(){$("movieCount").textContent=movies.length;$("wallCount").textContent=wallpapers.length;$("favCount").textContent=favorites.size}
+function saveFavorites(){localStorage.setItem("muxFavorites",JSON.stringify([...favorites]));updateStats()}
+function sizeText(n){return n<1048576?(n/1024).toFixed(0)+" KB":(n/1048576).toFixed(1)+" MB"}
+function norm(s){return s.toLowerCase().replace(/\.[^.]+$/,"").replace(/[^a-z0-9]/g,"")}
+function findPoster(fileName){
+ const base=fileName.replace(/\.[^.]+$/,"");
+ const extensions=["jpg","jpeg","png","webp"];
+ for(const ext of extensions){const path="posters/"+base+"."+ext; /* existence is checked by image load */ return path}
+ return "";
+}
+function addMovies(fileList){
+ const files=[...fileList].filter(f=>f.type.startsWith("video/")||/\.(mp4|webm|ogg|mov|m4v)$/i.test(f.name));
+ if(!files.length){toast(t("noVideos"));return}
+ for(const file of files){movies.push({id:++movieId,name:file.name.replace(/\.[^.]+$/,""),file,url:URL.createObjectURL(file),added:Date.now()+movieId,poster:"posters/"+file.name.replace(/\.[^.]+$/,"")})}
+ renderMovies();toast(files.length+" "+t("addedMovies"))
+}
+function posterMarkup(m){
+ return `<img src="${esc(m.poster)}.jpg" alt="${esc(m.name)} ${esc(t("localPoster"))}" onerror="this.onerror=null;this.src='${esc(m.poster)}.png';this.onerror=function(){this.onerror=null;this.style.display='none';this.parentElement.classList.add('no-poster');this.parentElement.insertAdjacentHTML('afterbegin','<div class=&quot;poster-title&quot;>${esc(m.name)}</div>')}" loading="lazy">`;
+}
+function renderMovies(){
+ const term=$("movieSearch").value.toLowerCase().trim();
+ let list=movies.filter(m=>m.name.toLowerCase().includes(term));
+ if($("movieSort").value==="newest")list.sort((a,b)=>b.added-a.added);else list.sort((a,b)=>a.name.localeCompare(b.name));
+ $("movieGrid").innerHTML=list.map(m=>`<article class="card"><div class="poster">${posterMarkup(m)}<span class="poster-tag">${esc(t("localPoster"))}</span><div class="poster-title">${esc(m.name)}</div></div><div class="card-body"><h3>${esc(m.name)}</h3><p>${esc(sizeText(m.file.size))} · ${esc(m.file.name.split(".").pop().toUpperCase())}</p><div class="card-actions"><button class="small-btn red" data-play="${m.id}">${esc(t("play"))}</button><button class="small-btn" data-rm-movie="${m.id}">${esc(t("remove"))}</button></div></div></article>`).join("");
+ $("movieEmpty").style.display=list.length?"none":"block";updateStats()
+}
+function openMovie(id){
+ const m=movies.find(x=>x.id===id);if(!m)return;currentMovie=m;
+ $("previewImage").style.display="none";$("videoPlayer").style.display="block";$("videoPlayer").src=m.url;$("videoPlayer").load();
+ $("videoPoster").style.display="block";$("videoPosterImage").src=m.poster+".jpg";$("videoPosterImage").onerror=()=>{$("videoPosterImage").src=m.poster+".png";$("videoPosterImage").onerror=()=>{$("videoPosterImage").style.display="none"}};
+ $("videoPosterText").textContent=m.name;$("modalTitle").textContent=m.name;$("modal").classList.add("open");
+ $("videoPlayer").play().catch(()=>toast(t("playHint")))
+}
+function addWalls(fileList){
+ const files=[...fileList].filter(f=>f.type.startsWith("image/")||/\.(jpe?g|png|webp|gif|avif)$/i.test(f.name));
+ if(!files.length){toast(t("noImages"));return}
+ files.forEach(file=>{const url=URL.createObjectURL(file),img=new Image();img.onload=()=>{const r=img.naturalWidth/img.naturalHeight,category=r>1.2?"Desktop":r<.85?"Mobile":"Square";wallpapers.push({id:++wallId,name:file.name.replace(/\.[^.]+$/,""),file,url,category});renderWallpapers()};img.onerror=()=>{wallpapers.push({id:++wallId,name:file.name,file,url,category:"Square"});renderWallpapers()};img.src=url});
+ toast(files.length+" "+t("addedWalls"))
+}
+function renderWallpapers(){
+ const term=$("wallSearch").value.toLowerCase().trim();
+ let list=wallpapers.filter(w=>w.name.toLowerCase().includes(term));
+ if(activeFilter==="Favorites")list=list.filter(w=>favorites.has(w.id));else if(activeFilter!=="All")list=list.filter(w=>w.category===activeFilter);
+ $("wallGrid").innerHTML=list.map(w=>`<article class="card"><div class="poster"><img src="${w.url}" alt="${esc(w.name)}" loading="lazy" data-preview="${w.id}"><span class="poster-tag">${esc(w.category.toUpperCase())}</span></div><div class="card-body"><h3>${esc(w.name)}</h3><p>${esc(w.category)} · ${esc(sizeText(w.file.size||0))}</p><div class="card-actions"><button class="small-btn" data-preview="${w.id}">${esc(t("preview"))}</button><button class="small-btn ${favorites.has(w.id)?"active":""}" data-fav="${w.id}">${esc(favorites.has(w.id)?t("saved"):t("save"))}</button><button class="small-btn red" data-download="${w.id}">${esc(t("download"))}</button><button class="small-btn" data-rm-wall="${w.id}">${esc(t("remove"))}</button></div></div></article>`).join("");
+ $("wallEmpty").style.display=list.length?"none":"block";updateStats()
+}
+function previewWall(id){const w=wallpapers.find(x=>x.id===id);if(!w)return;$("videoPlayer").pause();$("videoPlayer").removeAttribute("src");$("videoPlayer").style.display="none";$("videoPoster").style.display="none";$("previewImage").style.display="block";$("previewImage").src=w.url;$("modalTitle").textContent=w.name;$("modal").classList.add("open")}
+function closeModal(){$("videoPlayer").pause();$("videoPlayer").removeAttribute("src");$("videoPlayer").load();$("modal").classList.remove("open")}
+$("movieInput").addEventListener("change",e=>{addMovies(e.target.files);e.target.value=""});$("movieFolder").addEventListener("change",e=>{addMovies(e.target.files);e.target.value=""});
+$("movieSearch").addEventListener("input",renderMovies);$("movieSort").addEventListener("change",renderMovies);
+$("movieGrid").addEventListener("click",e=>{const p=e.target.closest("[data-play]"),r=e.target.closest("[data-rm-movie]");if(p)openMovie(+p.dataset.play);if(r){const i=movies.findIndex(m=>m.id===+r.dataset.rmMovie);if(i>=0){URL.revokeObjectURL(movies[i].url);movies.splice(i,1);renderMovies();toast(t("removedMovie"))}}});
+$("wallInput").addEventListener("change",e=>{addWalls(e.target.files);e.target.value=""});$("wallFolder").addEventListener("change",e=>{addWalls(e.target.files);e.target.value=""});$("wallSearch").addEventListener("input",renderWallpapers);
+$("wallFilters").addEventListener("click",e=>{const b=e.target.closest("[data-filter]");if(!b)return;activeFilter=b.dataset.filter;document.querySelectorAll(".chip").forEach(x=>x.classList.toggle("active",x===b));renderWallpapers()});
+$("wallGrid").addEventListener("click",e=>{const p=e.target.closest("[data-preview]"),f=e.target.closest("[data-fav]"),d=e.target.closest("[data-download]"),r=e.target.closest("[data-rm-wall]");if(p)previewWall(+p.dataset.preview);if(f){const id=+f.dataset.fav;favorites.has(id)?favorites.delete(id):favorites.add(id);saveFavorites();renderWallpapers()}if(d){const w=wallpapers.find(x=>x.id===+d.dataset.download);if(w){const a=document.createElement("a");a.href=w.url;a.download=w.file.name;document.body.appendChild(a);a.click();a.remove()}}if(r){const i=wallpapers.findIndex(w=>w.id===+r.dataset.rmWall);if(i>=0){URL.revokeObjectURL(wallpapers[i].url);favorites.delete(+r.dataset.rmWall);wallpapers.splice(i,1);saveFavorites();renderWallpapers();toast(t("removedWall"))}}});
+$("closeModal").addEventListener("click",closeModal);$("modal").addEventListener("click",e=>{if(e.target===$("modal"))closeModal()});document.addEventListener("keydown",e=>{if(e.key==="Escape")closeModal()});
+$("menuBtn").addEventListener("click",()=>$("navLinks").classList.toggle("open"));$("navLinks").addEventListener("click",e=>{if(e.target.closest("a"))$("navLinks").classList.remove("open")});
+/* PERMANENT WALLPAPERS: add paths such as "wallpapers/ironman.jpg" here. */
+const permanentWallpapers=[
+ // "wallpapers/ironman.jpg",
+ // "wallpapers/spiderman.jpg"
+];
+function loadPermanentWallpapers(){for(const path of permanentWallpapers){const img=new Image();img.onload=()=>{const ratio=img.naturalWidth/img.naturalHeight;wallpapers.push({id:++wallId,name:path.split("/").pop().replace(/\.[^.]+$/,""),file:{name:path.split("/").pop(),size:0},url:path,category:ratio>1.2?"Desktop":ratio<.85?"Mobile":"Square",permanent:true});renderWallpapers()};img.onerror=()=>console.warn("Wallpaper missing:",path);img.src=path}}
+loadPermanentWallpapers();applyLanguage();renderMovies();renderWallpapers();updateStats();
+/* PWA service worker registration; requires HTTPS or localhost. */
+if ("serviceWorker" in navigator && (location.protocol === "https:" || location.hostname === "localhost")) {
+ window.addEventListener("load",()=>navigator.serviceWorker.register("./service-worker.js").catch(err=>console.warn("PWA service worker:",err)));
+}
+
+</script>
+</body>
+</html>

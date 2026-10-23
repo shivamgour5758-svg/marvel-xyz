@@ -1,0 +1,1 @@
+Add poster images here. Match the movie filename, e.g. Iron Man.mp4 -> Iron Man.jpg.
